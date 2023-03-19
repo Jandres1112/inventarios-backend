@@ -1,8 +1,10 @@
 const { Router } = require('express');
 const router = Router();
 const Marca = require('../modelos/Marca');
+const {validar_marca, validarmarca} = require ('../helpers/validar_marca')
 router.get ('/', async function(req, res){
     try {
+        
         const marcas = await Marca.find();
          res.send(marcas);
     } catch (error) {
@@ -13,6 +15,11 @@ router.get ('/', async function(req, res){
 
 router.post ('/', async function(req, res){
     try {
+        const validacion = validarmarca(req);
+
+         if (validacion.length >0){
+            return res.status(400).send(validacion);
+         }
         let marca = new Marca();
         marca.nombre = req.body.nombre;
         marca.estado = req.body.estado;
