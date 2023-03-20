@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const EstadoEquipo = require('../modelos/EstadoEquipo');
-
+const {validarEstado, validarEsequipo} = require ('../helpers/validarEstado');
 const router = Router();
 
 router.get('/', async function(req, res){
@@ -15,6 +15,11 @@ router.get('/', async function(req, res){
 
 router.post('/', async function(req, res){
     try {
+        const validacion = validarEsequipo(req);
+
+         if (validacion.length >0){
+            return res.status(400).send(validacion);
+         }
         let estadoEquipo = new EstadoEquipo();
         estadoEquipo.nombre = req.body.nombre;
         estadoEquipo.estado = req.body.estado;

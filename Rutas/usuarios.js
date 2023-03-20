@@ -1,13 +1,17 @@
 const {Router} = require('express');
 const router = Router();
 const Usuario = require('../modelos/Usuario');
-
+const {validar_usuario, validarusuario } = require ('../helpers/validar_usuario')
 router.post('/', async function(req, res){
     try{
-        console.log('objeto recibido', req.body);
+        const validacion = validarusuario(req);
+
+        if (validacion.length >0){
+           return res.status(400).send(validacion);
+        }
 
         const usuarioexiste = await Usuario.findOne({email: req.body.email});
-        console.log('Lindo usuario ya existe');
+        console.log('usuario ya existe');
          if(usuarioexiste){
             return res.send('Email ya existe ');
          }

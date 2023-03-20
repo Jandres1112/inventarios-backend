@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const TipoEquipo = require('../modelos/TipoEquipo');
 const router = Router();
-
+const {validarTipoEquipo, validartipo } = require ('../helpers/validarTipoEquipo');
 router.get ('/', async function(req, res){
     try {
         const tipos = await TipoEquipo.find();
@@ -13,6 +13,13 @@ router.get ('/', async function(req, res){
 });
 
 router.post ('/', async function(req, res){
+      
+    const validacion = validartipo(req);
+
+    if (validacion.length >0){
+       return res.status(400).send(validacion);
+    }
+
     try {
         let tipoEquipo = new TipoEquipo();
         tipoEquipo.nombre = req.body.nombre;
