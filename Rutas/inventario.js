@@ -8,17 +8,17 @@ router.get ('/', async function(req, res){
     try {
         const inventarios = await Inventario.find().populate([
             {
-             path:'usuario'
+             path:'usuario', select:'nombre email estado'
             },
             {
-             path: 'marca'
+             path: 'marca', select:'nombre estado'
             },
             {
-             path: 'TipoEquipo'
+             path: 'tipoEquipo', select:'nombre estado'
              
             },
             {
-             path: 'EstadoEquipo'
+             path: 'EstadoEquipo', select:'nombre estado'
             }
         ]);
         res.send(inventarios);
@@ -30,20 +30,21 @@ router.get ('/', async function(req, res){
 
 router.post ('/', async function(req, res){
     try {
-         const validacion = validarInventario(req);
-
-         if (validacion.length >0){
-            return res.status(400).send(validacion);
-         }
-
-        const existeXserial = await Inventario.findOne({Serial: req.body.Serial});
+            const validation = validarInventario(req);
+            const existeXserial = await Inventario.findOne({serial: req.body.serial});
         if(existeXserial){
             return res.send('Ya existe el serial para otro equipo');
             
         }
 
+         if (validation.length >0){
+            return res.status(400).send(validation);
+         }
+         
+        
+
         let inventario = new Inventario();
-        inventario.Serial = req.body.Serial;
+        inventario.serial = req.body.serial;
         inventario.modelo = req.body.modelo;
         inventario.descripcion = req.body.descripcion;
         inventario.foto = req.body.foto;
@@ -56,14 +57,16 @@ router.post ('/', async function(req, res){
         inventario.EstadoEquipo = req.body.EstadoEquipo._id;
         inventario.fechaCreacion = new Date();
         inventario.fechaActualizacion = new Date();
-
+        console.log(inventario);
         inventario = await inventario.save();
-
+        
+        console.log(inventario);
         res.send(inventario);
+        
         
     } catch (error) {
         console.log(error);
-        res.send('Ocurrio un error al consultar inventario')
+        res.send('Ocurrio un error al consultar inventario 4')
     }
 });
 
@@ -89,7 +92,7 @@ router.put ('/:inventarioId', async function(req, res){
         inventario.precio = req.body.precio;
         inventario.usuario = req.body.usuario._id;
         inventario.marca = req.body.marca._id;
-        inventario.tipoEquipo = req.body.TipoEquipo._id;
+        inventario.tipoEquipo = req.body.tipoEquipo._id;
         inventario.EstadoEquipo = req.body.EstadoEquipo._id;
         inventario.fechaActualizacion = new Date();
 

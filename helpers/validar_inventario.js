@@ -1,45 +1,49 @@
 const validarInventario = (req) => {
-    const validacion = [];
+    const validation = [];
 
     if (!req.body.serial){
-        validacion.push('Serial Requerido');
+        validation.push('Serial Requerido');
     }
 
     if (!req.body.modelo){
-        validacion.push('Modelo Requerido');
+        validation.push('Modelo Requerido');
     }
     if (!req.body.descripcion){
-        validacion.push('Descripción Requerido');
+        validation.push('Descripción Requerido');
     }
 
     if (!req.body.color){
-        validacion.push('Color Requerido');
+        validation.push('Color Requerido');
     }
 
     if (!req.body.fechacompra){
-        validacion.push('fechacompra Requerido');
+        validation.push('fechacompra Requerido');
     }
     if (!req.body.foto){
-        validacion.push('Foto Requerido');
+        validation.push('Foto Requerido');
     }
 
     if (!req.body.precio){
-        validacion.push('Precio Requerido');
+        validation.push('Precio Requerido');
     }
 
     if (!req.body.usuario){
-        validacion.push('Usuario Requerido');
+        validation.push('Usuario Requerido');
+    }
+    
+    if (!req.body.marca){
+        validation.push('Marca Requerido');
     }
 
     if (!req.body.tipoEquipo){
-        validacion.push('TipoEquipo Requerido');
+        validation.push('TipoEquipo Requerido');
     }
 
     if (!req.body.EstadoEquipo){
-        validacion.push('EstadoEquipo Requerido');
+        validation.push('EstadoEquipo Requerido');
     }
 
-     return validacion;
+     return validation;
 }
 
 

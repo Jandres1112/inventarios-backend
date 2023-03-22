@@ -1,14 +1,14 @@
 const {Schema, model} = require('mongoose');
 
 const inventarioSchema = Schema ({
-  Serial: {
+  serial: {
     type: String,
     required: true,
     unique:true,
   },
   modelo: {
     type: String,
-    //required: true,
+    required: true,
   },
   descripcion: {
     type: String,
@@ -33,14 +33,14 @@ const inventarioSchema = Schema ({
   usuario: {
     type: Schema.Types.ObjectId,
     ref: 'usuario',
-    required: false,
+    required: true,
   },
   marca: {
     type: Schema.Types.ObjectId,
     ref: 'marca',
     required: true,
   },
-  TipoEquipo: {
+ tipoEquipo: {
     type: Schema.Types.ObjectId,
     ref: 'TipoEquipo',
     required: true,
