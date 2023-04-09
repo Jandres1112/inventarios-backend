@@ -78,12 +78,12 @@ router.put ('/:inventarioId', async function(req, res){
             
         }
          const existeInventario =await Inventario
-                 .findOne({Serial: req.body.Serial, _id: {$ne: inventario._id}});
+                 .findOne({serial: req.body.serial, _id: {$ne: inventario._id}});
          
          if(existeInventario){
             return res.send('ya existe el serial para otro equipo');
          }
-        inventario.Serial = req.body.Serial;
+        inventario.serial = req.body.serial;
         inventario.modelo = req.body.modelo;
         inventario.descripcion = req.body.descripcion;
         inventario.foto = req.body.foto;
